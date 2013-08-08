@@ -130,6 +130,21 @@ if not env.GetOption('clean'):
                                          'CheckOpenSSL': CheckOpenSSL,
                                          'CheckAPR': CheckAPR,
                                          'CheckGCrypt': CheckGCrypt})
+    # Custom tests.
+
+    if not conf.CheckGCrypt():
+        print "libgcrypt not found."
+        Exit(1)
+    if not conf.CheckLibPQ():
+        print "PostgreSQL's libPQ not found."
+        Exit(1)
+    if not conf.CheckOpenSSL():
+        print "OpenSSL not found."
+        Exit(1)
+    if not conf.CheckAPR():
+        print "Apache APR not found."
+        Exit(1)
+
     if not conf.CheckLib('fl', autoadd=1):
         print "GNU flex library not found."
         Exit(1)
@@ -168,21 +183,6 @@ if not env.GetOption('clean'):
         Exit(1)
     else:
         env['tbxsosd_LIBS'] += ['adns']
-
-    # Custom tests.
-
-    if not conf.CheckGCrypt():
-        print "libgcrypt not found."
-        Exit(1)
-    if not conf.CheckLibPQ():
-        print "PostgreSQL's libPQ not found."
-        Exit(1)
-    if not conf.CheckOpenSSL():
-        print "OpenSSL not found."
-        Exit(1)
-    if not conf.CheckAPR():
-        print "Apache APR not found."
-        Exit(1)
 
 if str(env['build_type']) == 'full':
     conf_options['build_conf'] = 0
