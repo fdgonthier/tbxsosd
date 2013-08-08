@@ -132,6 +132,7 @@ def CheckLibPQ(context):
     context.Message("Checking for PostgreSQL's libPQ...")
     if commands.getstatusoutput('which pg_config')[0] == 0:
         env['LIBS'] += ['pq']
+        env['LIBPATH'] += commands.getoutput('pg_config --libdir').strip().split()
         env['CPPPATH'] += commands.getoutput('pg_config --includedir').strip().split()
         context.Result('ok')
         return 1
