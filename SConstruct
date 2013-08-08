@@ -92,14 +92,28 @@ def CheckGCrypt(context):
 
 def CheckAPR(context):
     context.Message("Checking for APR 1.x...")
-    which_res = commands.getstatusoutput('which apr-config')[0]
-    if which_res == 0 and commands.getoutput('apr-config --version').startswith("1."):
-        env['LIBS'] += commands.getoutput('apr-config --libs').strip().split()
+    # Find the right apr-config command. On Debian it's apr-config, on
+    # CentOS, it's apr-1-config.
+    apr_commands = ["apr-config", "apr-1-config"]
+    apr_command = None
+    for apr_c in apr_commands:
+        which_res = commands.getstatusoutput('which ' + apr_c)[0]
+        if which_res == 0:
+            apr_command = apr_c
+            break
+    if not apr_command:
+        context.Message("Coud not find apr-config (or apr-1-config) on the $PATH")
+        context.Result('failed')
+        return 0
+    apr_version = commands.getoutput(apr_command + ' --version')
+    if apr_version.startswith("1."):
+        env['LIBS'] += commands.getoutput(apr_command + ' --libs').strip().split()
         env['LIBS'] += ['apr-1']
-        env['CPPPATH'] += commands.getoutput('apr-config --includedir').strip().split()
+        env['CPPPATH'] += commands.getoutput(apr_command + ' --includedir').strip().split()
         context.Result('ok')
         return 1
     else:
+        context.Message("Wrong version of APR: " + apr_version)
         context.Result('failed')
         return 0
 
