@@ -121,7 +121,8 @@ def CheckOpenSSL(context):
     context.Message("Checking for OpenSSL...")
     which_res = commands.getstatusoutput('which pkg-config')[0]
     if commands.getstatusoutput('which pkg-config')[0] == 0:
-        env['tbxsosd_LIBS'] += commands.getoutput('pkg-config openssl --libs').strip().split()
+        env['tbxsosd_LIBS'] += commands.getoutput('pkg-config openssl --libs-only-l').strip().split()
+        env['LINKFLAGS'] += commands.getoutput('pkg-config openssl --libs-only-other').strip().split()
         context.Result('ok')
         return 1
     else:
