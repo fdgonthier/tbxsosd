@@ -39,6 +39,7 @@ opts.AddVariables(
     ('BINDIR', 'Executable path', '/usr/bin'),
     ('DBDIR', 'Directory where to copy the database (.sqlpy) files.', '/usr/share/teambox/db'),
     ('WWWDIR', 'Root directory of the web applications', '/usr/share/teambox/www'),
+    ('APACHEDIR', 'Path to the Apache configuration', '/etc/apache2/conf.d'),
     ('PYTHONDIR', 'Path to Python libraries.', '/usr/share/teambox/python'))
 
 #
