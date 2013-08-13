@@ -166,6 +166,8 @@ if not env.GetOption('clean'):
         print "GNU flex library not found."
         Exit(1)
 
+    conf.CheckLib('lber', autoadd=1)
+
     if not conf.CheckLib('ldap', autoadd=1):
         print "OpenLDAP library not found."
         Exit(1)
