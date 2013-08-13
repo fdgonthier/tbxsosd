@@ -63,7 +63,7 @@ server.kpg_address = "";
 server.kpg_port = "";
 
 # KAS address
-server.kas_address = "$HOSTNAME";
+server.kas_address = "@@HOSTNAME@@";
 server.kas_port = "443";
 
 # SMTP server address for forwarding.
