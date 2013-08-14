@@ -19,10 +19,8 @@ Import('env conf_options')
 
 config_files = env.Glob("*.conf");
 
-server_conf = env.Substfile("server.conf.in",
-                            SUBST_DICT = {'\$HOSTNAME': socket.gethostname() })
-ssl_conf = env.Substfile("ssl.conf.in",
-                         SUBST_DICT = {'\$CONFDIR': env['CONFDIR'] })
+server_conf = env.Substfile("server.conf.in", SUBST_DICT = { })
+ssl_conf = env.Substfile("ssl.conf.in", SUBST_DICT = {'\$CONFDIR': env['CONFDIR'] })
 
 for cf in config_files:
     env.Install(dir = env['CONFDIR'], target = cf)
